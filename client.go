@@ -2,7 +2,6 @@ package teamcity_sdk
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -21,12 +20,10 @@ func CreateGuestAuth(url string) *Client {
 }
 
 // Perform an action on the API against this path
-func (c *Client) doRequest(path string) (*http.Response, error) {
+func (c *Client) doRequest(method string, path string) (*http.Response, error) {
 	c.headers["Accept"] = "application/json"
 	client := &http.Client{}
-	url := c.createBasePath() + path
-	log.Println("Requesting: ", url)
-	req, _ := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest(method, c.createBasePath() + path, nil)
 	for k, v := range c.headers {
 		req.Header.Add(k, v)
 	}
