@@ -1,6 +1,7 @@
 package teamcity_sdk
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -14,21 +15,26 @@ func TestClient_SearchBuilds_Count100(t *testing.T) {
 		"buildType": "myType",
 		"arg2": "arg2Value",
 	}, 100)
+	defer srv.Close()
+	assert.Equal(t, "115_hotfix/HS-934--two_hover_menus_showing", builds.Builds[0].Number)
 	assert.Equal(t, 2, builds.Count)
 	assert.NoError(t, err)
 }
 
 func createTestHttpServer(response string) *httptest.Server {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		for k, v := range r.Header {
+			fmt.Println("Values:", k, v)
+		}
+		fmt.Println("URL:", r.URL)
 		w.Write([]byte(response))
 	}))
-	defer ts.Close()
 	return ts
 }
 
 var buildResponse = `{
 	"count": 2,
-	"href": "/guestAuth/app/rest/builds?locator=buildType%3APhoneApp_ReleasesHotfixes,status%3ASUCCESS,defaultFilter%3Afalse,&count=100",
+	"href": "validHref",
 	"build": [{
 		"id": 73950,
 		"buildTypeId": "PhoneApp_ReleasesHotfixes",
@@ -41,7 +47,7 @@ var buildResponse = `{
 	}, {
 		"id": 62488,
 		"buildTypeId": "PhoneApp_ReleasesHotfixes",
-		"number": "1",
+		"number": "115_hotfix/HS-934--two_hover_menus_showing",
 		"status": "SUCCESS",
 		"state": "finished",
 		"branchName": "development",
