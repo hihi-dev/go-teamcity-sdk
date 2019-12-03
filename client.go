@@ -11,8 +11,8 @@ type Client struct {
 	headers  map[string]string
 }
 
-func CreateGuestAuth(url string) Client {
-	return Client{
+func CreateGuestAuth(url string) *Client {
+	return &Client{
 		authType: "guestAuth",
 		baseUrl:  url,
 		headers:  map[string]string{},
