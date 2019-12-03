@@ -11,6 +11,14 @@ type Client struct {
 	headers  map[string]string
 }
 
+func CreateGuestAuth(url string) Client {
+	return Client{
+		authType: "guestAuth",
+		baseUrl:  url,
+		headers:  map[string]string{},
+	}
+}
+
 // Perform an action on the API against this path
 func (c *Client) doRequest(path string) (*http.Response, error) {
 	c.headers["Accept"] = "application/json"
