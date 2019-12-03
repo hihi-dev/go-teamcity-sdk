@@ -7,9 +7,9 @@ import (
 )
 
 func (c *Client) SearchBuilds(locators map[string]string, count int) (b BuildList, e error) {
-	path := "/builds?"
+	path := "/builds?locator="
 	for k, v := range locators {
-		path = path + fmt.Sprintf("%s:%s,", k, v)
+		path = fmt.Sprintf("%s:%s,", k, v)
 	}
 	js := &BuildList{}
 	res, err := c.doRequest(fmt.Sprintf("%s&count=%d", path, count))
