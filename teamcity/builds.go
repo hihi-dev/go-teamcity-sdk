@@ -1,4 +1,4 @@
-package teamcity_sdk
+package teamcity
 
 import (
 	"encoding/json"
