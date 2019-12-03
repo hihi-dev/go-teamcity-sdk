@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 )
 
-func (c *Client) SearchBuilds(locators map[string]string, count int) (b BuildList, e error) {
+func (c *Client) SearchBuilds(locators map[string]string, count int) (b *BuildList, e error) {
 	path := "/builds?locator="
 	for k, v := range locators {
 		path = path + fmt.Sprintf("%s:%s,", k, v)
@@ -14,11 +14,11 @@ func (c *Client) SearchBuilds(locators map[string]string, count int) (b BuildLis
 	js := &BuildList{}
 	res, err := c.doRequest("GET", fmt.Sprintf("%s&count=%d", path, count))
 	if err != nil {
-		return BuildList{}, err
+		return js, err
 	}
 	body, _ := ioutil.ReadAll(res.Body)
 	_ = json.Unmarshal(body, js)
-	return *js, nil
+	return js, nil
 }
 
 type BuildList struct {
