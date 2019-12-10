@@ -8,7 +8,7 @@ import (
 
 func (c *Client) GetArtifactsForBuildId(buildId int64) (*BuildArtifactsList, error) {
 	url := fmt.Sprintf("/builds/id:%d/artifacts", buildId)
-	resp, err := c.doRequest("GET", url)
+	resp, err := c.doRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
