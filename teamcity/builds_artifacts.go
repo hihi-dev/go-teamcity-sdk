@@ -19,12 +19,14 @@ func (c *Client) GetArtifactsForBuildId(buildId int64) (*BuildArtifactsList, err
 		return nil, be
 	}
 	je := json.Unmarshal(js, art)
+	art.BaseUrl = c.baseUrl
 	return art, je
 }
 
 type BuildArtifactsList struct {
 	Artifacts []BuildArtifact `json:"file"`
 	Count     int             `json:"count"`
+	BaseUrl   string          `json:"baseUrl"`
 }
 
 type BuildArtifact struct {
