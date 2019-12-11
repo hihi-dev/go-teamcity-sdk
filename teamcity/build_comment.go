@@ -11,7 +11,7 @@ import (
 func (c Client) PostCommentOnBuild(buildId int64, comment string) error {
 	url := fmt.Sprintf("/builds/id:%d/comment", buildId)
 	c.headers["Content-Type"] = "text/plain"
-	c.headers["Origin"] = "http://teamcity.apps.4com.co.uk:7500"
+	c.headers["Origin"] = c.baseUrl
 	r, err := c.doRequest("PUT", url, strings.NewReader(comment))
 	if err != nil {
 		return err

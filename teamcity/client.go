@@ -24,7 +24,7 @@ func CreateGuestAuth(url string) *Client {
 func (c *Client) doRequest(method string, path string, body io.Reader) (*http.Response, error) {
 	c.headers["Accept"] = "application/json"
 	client := &http.Client{}
-	req, _ := http.NewRequest(method, c.createBasePath() + path, nil)
+	req, _ := http.NewRequest(method, c.createBasePath() + path, body)
 	for k, v := range c.headers {
 		req.Header.Add(k, v)
 	}
