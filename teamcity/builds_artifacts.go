@@ -19,7 +19,7 @@ func (c *Client) GetArtifactsForBuildId(buildId int64) (*BuildArtifactsList, err
 		return nil, be
 	}
 	je := json.Unmarshal(js, art)
-	art.BaseUrl = c.baseUrl
+	//art.BaseUrl = c.baseUrl
 	return art, je
 }
 
