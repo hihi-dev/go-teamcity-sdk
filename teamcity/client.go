@@ -3,6 +3,7 @@ package teamcity
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -22,6 +23,7 @@ func CreateGuestAuth(url string) *Client {
 
 // Perform an action on the API against this path
 func (c *Client) doRequest(method string, path string, body io.Reader) (*http.Response, error) {
+	log.Println("teamcity-sdk Request:", method, path)
 	c.headers["Accept"] = "application/json"
 	client := &http.Client{}
 	req, _ := http.NewRequest(method, c.createBasePath() + path, body)
