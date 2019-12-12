@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func (c Client) PostCommentOnBuild(buildId int64, comment string) error {
+func (c *Client) PostCommentOnBuild(buildId int64, comment string) error {
 	url := fmt.Sprintf("/builds/id:%d/comment", buildId)
 	c.headers["Content-Type"] = "text/plain"
 	c.headers["Origin"] = c.baseUrl
@@ -31,7 +31,7 @@ type UserCommentResponse struct {
 	Comment UserComment `json:"comment"`
 }
 
-func (c Client) GetCommentOnBuild(buildId int64) (*UserCommentResponse, error) {
+func (c *Client) GetCommentOnBuild(buildId int64) (*UserCommentResponse, error) {
 	url := fmt.Sprintf("/builds/id:%d?fields=comment", buildId)
 	r, err := c.doRequest("GET", url, nil)
 	if err != nil {
@@ -50,7 +50,7 @@ func (c Client) GetCommentOnBuild(buildId int64) (*UserCommentResponse, error) {
 	return resp, nil
 }
 
-func (c Client) DeleteCommentOnBuild(buildId int64) error {
+func (c *Client) DeleteCommentOnBuild(buildId int64) error {
 	url := fmt.Sprintf("/builds/id:%d/comment", buildId)
 	r, err := c.doRequest("DELETE", url, nil)
 	if err != nil {
