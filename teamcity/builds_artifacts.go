@@ -35,7 +35,7 @@ func (c *Client) ResolveArtifactUrl(href string) (string, error) {
 		return "", be
 	}
 	je := json.Unmarshal(bd, resp)
-	return resp.Content.Href, je
+	return c.baseUrl + resp.Content.Href, je
 }
 
 type buildArtifactHrefResponse struct {
