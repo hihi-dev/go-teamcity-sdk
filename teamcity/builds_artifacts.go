@@ -24,7 +24,7 @@ func (c *Client) GetArtifactsForBuildId(buildId int64) (*BuildArtifactsList, err
 
 // TeamCity requires turning the received 'href' of an artifact into a usable download path
 func (c *Client) ResolveArtifactUrl(href string) (string, error) {
-	jsn, err := c.doRequest("GET", href, nil)
+	jsn, err := c.doRequest("GET", c.baseUrl + href, nil)
 	if err != nil {
 		return "", err
 	}
