@@ -22,16 +22,19 @@ func CreateGuestAuth(url string) *Client {
 }
 
 // Perform an action on the API against this path
-func (c *Client) doRequest(method string, path string, body io.Reader) (*http.Response, error) {
+func (c *Client) doRequest(method string, fullUrl string, body io.Reader) (*http.Response, error) {
 	c.headers["Accept"] = "application/json"
 	client := &http.Client{}
-	url := c.createBasePath() + path
-	log.Println("teamcity-sdk Request:", method, url)
-	req, _ := http.NewRequest(method, url, body)
+	log.Println("teamcity-sdk Request:", method, fullUrl)
+	req, _ := http.NewRequest(method, fullUrl, body)
 	for k, v := range c.headers {
 		req.Header.Add(k, v)
 	}
 	return client.Do(req)
+}
+
+func (c *Client) doRequestWithPrefix(method string, path string, body io.Reader) (*http.Response, error) {
+	return c.doRequest(method, c.createBasePath() + path, body)
 }
 
 // The path to the rest API

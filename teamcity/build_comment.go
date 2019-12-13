@@ -12,7 +12,7 @@ func (c *Client) PostCommentOnBuild(buildId int64, comment string) error {
 	url := fmt.Sprintf("/builds/id:%d/comment", buildId)
 	c.headers["Content-Type"] = "text/plain"
 	c.headers["Origin"] = c.baseUrl
-	r, err := c.doRequest("PUT", url, strings.NewReader(comment))
+	r, err := c.doRequestWithPrefix("PUT", url, strings.NewReader(comment))
 	if err != nil {
 		return err
 	}
@@ -33,7 +33,7 @@ type UserCommentResponse struct {
 
 func (c *Client) GetCommentOnBuild(buildId int64) (*UserCommentResponse, error) {
 	url := fmt.Sprintf("/builds/id:%d?fields=comment", buildId)
-	r, err := c.doRequest("GET", url, nil)
+	r, err := c.doRequestWithPrefix("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func (c *Client) GetCommentOnBuild(buildId int64) (*UserCommentResponse, error) 
 
 func (c *Client) DeleteCommentOnBuild(buildId int64) error {
 	url := fmt.Sprintf("/builds/id:%d/comment", buildId)
-	r, err := c.doRequest("DELETE", url, nil)
+	r, err := c.doRequestWithPrefix("DELETE", url, nil)
 	if err != nil {
 		return err
 	}

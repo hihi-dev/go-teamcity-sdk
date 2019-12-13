@@ -12,7 +12,7 @@ func (c *Client) SearchBuilds(locators map[string]string, count int) (b *BuildLi
 		path = path + fmt.Sprintf("%s:%s,", k, v)
 	}
 	js := &BuildList{}
-	res, err := c.doRequest("GET", fmt.Sprintf("%s&count=%d", path, count), nil)
+	res, err := c.doRequestWithPrefix("GET", fmt.Sprintf("%s&count=%d", path, count), nil)
 	if err != nil {
 		return js, err
 	}
